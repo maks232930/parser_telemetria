@@ -9,7 +9,7 @@ def get_proxy():
     result = soup.find_all('tr', attrs={'class': 'cls81'})
     proxy_list = [div.find('font', attrs={'class': 'cls1'}).text for div in result]
 
-    for proxy in proxy_list[5:]:
+    for proxy in proxy_list:
         try:
             url = "http://" + proxy
             r = requests.get('https://telemetr.me/channels', proxies={'http': url})

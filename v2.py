@@ -9,10 +9,10 @@ def get_proxy():
     result = soup.find_all('tr', attrs={'class': 'cls81'})
     proxy_list = [div.find('font', attrs={'class': 'cls1'}).text for div in result]
 
-    for proxy in proxy_list[5:]:
+    for proxy in proxy_list[3:]:
         try:
             url = "http://" + proxy
-            r = requests.get('https://telemetr.me/channels', proxies={'http': url})
+            r = requests.get('https://yandex.by', proxies={'http': url})
             if r.status_code == 200:
                 return url
         except requests.exceptions.ConnectionError:
@@ -26,14 +26,12 @@ def telemetria_pars(category):
         pg = requests.get(url, proxies={'http': proxy})
         soup = BeautifulSoup(pg.content, 'html.parser')
         max_pagination = soup.find_all('div', attrs={'class': 'col-7 col-md-3'})
-        pages = max_pagination[-1].text
-        count = [i for i in pages.split()]
-        max_pages = int(count[-1])
+        max_pages = int(max_pagination[-1].text)
 
         pagination = [
-            requests.get(f'https://telemetr.me/channels/cat/{category}/?page=' + str(i), proxies={'http': proxy}) for
-            i in
-            range(1, max_pages + 1)]
+            requests.get(f'https://telemetr.me/channels/cat/{category}/?page=' + str(i), proxies={'http': proxy})
+            for i in range(1, max_pages + 1)
+        ]
 
         for page in pagination:
             bs = BeautifulSoup(page.content, 'html.parser')

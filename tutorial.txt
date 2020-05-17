@@ -1,0 +1,7 @@
+# Beatiful Soup
+movie_link = item.find('div', {'class': 'nameRus'}).find('a').get('href')
+movie_desc = item.find('div', {'class': 'nameRus'}).find('a').text
+
+# lxml
+movie_link = item_lxml.xpath('.//div[@class = "nameRus"]/a/@href')[0]
+movie_desc = item_lxml.xpath('.//div[@class = "nameRus"]/a/text()')[0]
